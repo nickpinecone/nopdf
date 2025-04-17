@@ -1,0 +1,24 @@
+services:
+  robochat-db:
+    image: postgres
+    ports:
+      - 5234:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: robochat
+    volumes:
+      - robochat-data:/var/lib/postgresql/data
+
+  robochat:
+    build: ./
+    depends_on:
+      robochat-db:
+        condition: service_started
+    volumes:
+      - './:/app:z'
+      - '/app/bin'
+      - '/app/obj'
+
+volumes:
+  robochat-data:
