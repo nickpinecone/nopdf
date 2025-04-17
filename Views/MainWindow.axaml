@@ -3,6 +3,8 @@
         xmlns:vm="using:Robochat.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+        xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Robochat.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -16,34 +18,49 @@
     </Design.DataContext>
 
     <StackPanel Margin="20">
-    <TextBlock Margin="0 5">Чаты:</TextBlock>
-    <ItemsRepeater  ItemsSource="{Binding Chats}" >
-        <ItemsRepeater.ItemTemplate>
-        <DataTemplate>
-            <StackPanel>
-                <TextBlock Text="{Binding Id}"/>
-                <ItemsRepeater  ItemsSource="{Binding Messages}" >
-                    <ItemsRepeater.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Content}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                    </ItemsRepeater.ItemTemplate>
+    <ItemsRepeater ItemsSource="{Binding Chats}">
+    <ItemsRepeater.ItemTemplate>
+    <DataTemplate>
+        <controls:Card Margin="4">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="24"/>
+                    <RowDefinition Height="24"/>
+                </Grid.RowDefinitions>
+
+                <icons:MaterialIcon Kind="Robot" Margin="0,0,8,0" Grid.Column="0" Grid.RowSpan="2" Width="48" Height="48"/>
+
+                <ItemsRepeater ItemsSource="{Binding Users}" Grid.Column="1" Grid.Row="0">
+                <ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock FontSize="18" Margin="4" FontWeight="Bold" Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
                 </ItemsRepeater>
-                <ItemsRepeater  ItemsSource="{Binding Users}" >
-                    <ItemsRepeater.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Name}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                    </ItemsRepeater.ItemTemplate>
-                </ItemsRepeater>
-            </StackPanel>
-        </DataTemplate>
-        </ItemsRepeater.ItemTemplate>
-        </ItemsRepeater>
+
+                <TextBlock Margin="4" Text="Пример последнего сообщения" Grid.Column="1" Grid.Row="1"/>
+                <!-- <ItemsRepeater ItemsSource="{Binding Messages}" Grid.Column="1" Grid.Row="1">
+                <ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Content}"/>
+                    </StackPanel>
+                </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater> -->
+            </Grid>
+        </controls:Card>
+    </DataTemplate>
+    </ItemsRepeater.ItemTemplate>
+    </ItemsRepeater>
     </StackPanel>
 
 </Window>

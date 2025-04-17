@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Reactive.Disposables;
 using DynamicData;
-using DynamicData.Binding;
 using ReactiveUI;
 using Robochat.Data;
 using Robochat.Models;
