@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Robochat.Models;
@@ -36,6 +37,18 @@ public class AppDbContext : DbContext
                     context.Set<User>().Add(user);
                     context.Set<User>().Add(bot);
                     context.Set<Chat>().Add(chat);
+
+                    context.SaveChanges();
+
+                    var message = new Message()
+                    {
+                        ChatId = chat.Id,
+                        UserId = user.Id,
+                        Content = "Это пример сообщения",
+                        CreatedAt = DateTime.UtcNow
+                    };
+
+                    context.Set<Message>().Add(message);
                 }
 
                 context.SaveChanges();

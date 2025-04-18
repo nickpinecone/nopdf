@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Robochat.Models;
+using Robochat.Services.UserAccessor;
 
 namespace Robochat.Data;
 
@@ -18,9 +21,21 @@ public interface IMessageRepository
 
 public class MessageRepository : IMessageRepository
 {
-    public Task<List<Message>> GetMessages(int chatId)
+    private readonly AppDbContext _db;
+
+    public MessageRepository(AppDbContext db)
     {
-        throw new System.NotImplementedException();
+        _db = db;
+    }
+
+    public async Task<List<Message>> GetMessages(int chatId)
+    {
+        return await _db.Messages
+            .Include(m => m.Chat)
+            .Include(m => m.User)
+            .Where(m => m.ChatId == chatId)
+            .OrderByDescending(m => m.CreatedAt)
+            .ToListAsync();
     }
 
     public Task<Message> SendMessage(SendMessageRequest request)

@@ -11,7 +11,7 @@ using Robochat.Data;
 namespace Robochat.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250417112733_Initial")]
+    [Migration("20250418160328_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

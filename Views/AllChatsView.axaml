@@ -10,7 +10,7 @@
     <ItemsRepeater ItemsSource="{Binding Chats}">
     <ItemsRepeater.ItemTemplate>
     <DataTemplate>
-        <controls:Card Margin="4" PointerPressed="Card_PointerPressed">
+        <controls:Card Margin="4" PointerPressed="Card_PointerPressed" >
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="48" />

@@ -17,15 +17,17 @@ public class AllChatsViewModel : ReactiveObject, IActivatableViewModel, IRoutabl
     public ObservableCollection<ChatDto> Chats { get; private set; } = new();
 
     private readonly IChatRepository _chatRepository;
+    private readonly IMessageRepository _messageRepository;
     private readonly Mapper _mapper;
 
-    public AllChatsViewModel(IScreen screen, IChatRepository chatRepository, Mapper mapper)
+    public AllChatsViewModel(IScreen screen, IChatRepository chatRepository, Mapper mapper, IMessageRepository messageRepository)
     {
+        Activator = new ViewModelActivator();
+
         HostScreen = screen;
         _chatRepository = chatRepository;
+        _messageRepository = messageRepository;
         _mapper = mapper;
-
-        Activator = new ViewModelActivator();
 
         this.WhenActivated(async (CompositeDisposable disposables) =>
         {
@@ -42,6 +44,7 @@ public class AllChatsViewModel : ReactiveObject, IActivatableViewModel, IRoutabl
 
     public void RouteToChat()
     {
-        HostScreen.Router.Navigate.Execute(new ChatViewModel(HostScreen, _chatRepository, _mapper));
+
+        HostScreen.Router.Navigate.Execute(new ChatViewModel(HostScreen, _messageRepository, _mapper, 1));
     }
 }

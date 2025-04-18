@@ -1,9 +1,23 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:Robochat.ViewModels"
+             xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
              x:DataType="vm:ChatViewModel"
              x:Class="Robochat.Views.ChatView">
     <StackPanel Margin="4">
         <Button Click="Button_Click">Back</Button>
+
+        <StackPanel Margin="4">
+        <ItemsRepeater ItemsSource="{Binding Messages}">
+        <ItemsRepeater.ItemTemplate>
+        <DataTemplate>
+            <controls:Card Margin="4">
+                <TextBlock Text="{Binding Content}"/>
+            </controls:Card>
+        </DataTemplate>
+        </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+        </StackPanel>
+
     </StackPanel>
 </UserControl>
