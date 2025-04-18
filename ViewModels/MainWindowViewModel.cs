@@ -1,19 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Reactive.Disposables;
-using DynamicData;
+﻿using System.Reactive.Disposables;
 using ReactiveUI;
 using Robochat.Data;
-using Robochat.Models;
 using Robochat.Services;
 
 namespace Robochat.ViewModels;
 
-public partial class MainWindowViewModel : ViewModelBase, IActivatableViewModel
+public partial class MainWindowViewModel : ViewModelBase, IActivatableViewModel, IScreen
 {
     public ViewModelActivator Activator { get; }
-
-    public ObservableCollection<ChatDto> Chats { get; private set; } = new();
+    public RoutingState Router { get; } = new RoutingState();
 
     private readonly IChatRepository _chatRepository;
     private readonly Mapper _mapper;
@@ -25,11 +20,9 @@ public partial class MainWindowViewModel : ViewModelBase, IActivatableViewModel
 
         Activator = new ViewModelActivator();
 
-        this.WhenActivated(async (CompositeDisposable disposables) =>
+        this.WhenActivated((CompositeDisposable disposables) =>
         {
-            var chats = await _chatRepository.GetChats();
-
-            Chats.AddRange(_mapper.Map(chats));
+            Router.Navigate.Execute(new AllChatsViewModel(this, _chatRepository, _mapper));
 
             Disposable
                 .Create(() => { })
