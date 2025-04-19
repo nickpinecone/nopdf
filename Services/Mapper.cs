@@ -11,7 +11,7 @@ public class Mapper
         return new MessageDto()
         {
             Content = message.Content,
-            CreatedAt = message.CreatedAt,
+            CreatedAt = message.CreatedAt.ToLocalTime(),
             User = new UserDto()
             {
                 Name = message.User!.Name

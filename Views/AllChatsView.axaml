@@ -5,24 +5,17 @@
              xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              x:DataType="vm:AllChatsViewModel"
              x:Class="Robochat.Views.AllChatsView">
+    
+    <UserControl.Styles>
+        <StyleInclude Source="/Styles.axaml"/>
+    </UserControl.Styles>
 
     <StackPanel Margin="20">
     <ItemsRepeater ItemsSource="{Binding Chats}">
     <ItemsRepeater.ItemTemplate>
     <DataTemplate>
-        <controls:Card Margin="4" PointerPressed="Card_PointerPressed" >
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="48" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="24"/>
-                    <RowDefinition Height="24"/>
-                </Grid.RowDefinitions>
-
+        <controls:Card Margin="4" PointerPressed="Chat_Click">
+            <Grid ColumnDefinitions="48, Auto, Auto" RowDefinitions="24, 24">
                 <icons:MaterialIcon Kind="Robot" Margin="0,0,8,0" Grid.Column="0" Grid.RowSpan="2" Width="48" Height="48"/>
 
                 <ItemsRepeater ItemsSource="{Binding Users}" Grid.Column="1" Grid.Row="0">
@@ -35,16 +28,15 @@
                 </ItemsRepeater.ItemTemplate>
                 </ItemsRepeater>
 
-                <TextBlock Margin="4" Text="Пример последнего сообщения" Grid.Column="1" Grid.Row="1"/>
-                <!-- <ItemsRepeater ItemsSource="{Binding Messages}" Grid.Column="1" Grid.Row="1">
+                <ItemsRepeater ItemsSource="{Binding Messages}" Grid.Column="1" Grid.Row="1">
                 <ItemsRepeater.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding Content}"/>
+                        <TextBlock Margin="4" Text="{Binding Content}"/>
                     </StackPanel>
                 </DataTemplate>
                 </ItemsRepeater.ItemTemplate>
-                </ItemsRepeater> -->
+                </ItemsRepeater>
             </Grid>
         </controls:Card>
     </DataTemplate>

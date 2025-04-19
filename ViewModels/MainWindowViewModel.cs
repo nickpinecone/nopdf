@@ -10,21 +10,13 @@ public partial class MainWindowViewModel : ViewModelBase, IActivatableViewModel,
     public ViewModelActivator Activator { get; }
     public RoutingState Router { get; } = new RoutingState();
 
-    private readonly IChatRepository _chatRepository;
-    private readonly IMessageRepository _messageRepository;
-    private readonly Mapper _mapper;
-
-    public MainWindowViewModel(IChatRepository chatRepository, Mapper mapper, IMessageRepository messageRepository)
+    public MainWindowViewModel()
     {
-        _chatRepository = chatRepository;
-        _messageRepository = messageRepository;
-        _mapper = mapper;
-
         Activator = new ViewModelActivator();
 
         this.WhenActivated((CompositeDisposable disposables) =>
         {
-            Router.Navigate.Execute(new AllChatsViewModel(this, _chatRepository, _mapper, _messageRepository));
+            Router.Navigate.Execute(new AllChatsViewModel(this));
 
             Disposable
                 .Create(() => { })

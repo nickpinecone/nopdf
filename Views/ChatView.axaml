@@ -1,23 +1,59 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:Robochat.ViewModels"
+             xmlns:local="using:Robochat.Views"
              xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+             xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              x:DataType="vm:ChatViewModel"
              x:Class="Robochat.Views.ChatView">
-    <StackPanel Margin="4">
-        <Button Click="Button_Click">Back</Button>
+    <Grid RowDefinitions="Auto, *, Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
 
-        <StackPanel Margin="4">
-        <ItemsRepeater ItemsSource="{Binding Messages}">
-        <ItemsRepeater.ItemTemplate>
-        <DataTemplate>
-            <controls:Card Margin="4">
-                <TextBlock Text="{Binding Content}"/>
-            </controls:Card>
-        </DataTemplate>
-        </ItemsRepeater.ItemTemplate>
-        </ItemsRepeater>
-        </StackPanel>
+        <Border BorderThickness="0,0,0,2" BorderBrush="LightGray" Grid.Row="0" Background="WhiteSmoke">
+            <Grid ColumnDefinitions="Auto, Auto, *">
+                <Button Click="BackButton_Click" Margin="8" Grid.Column="0">
+                    <icons:MaterialIcon Kind="ArrowLeft" Margin="4,0" Width="24" Height="24" />
+                </Button>
 
-    </StackPanel>
+                <icons:MaterialIcon Kind="Robot" Margin="0,0,8,0" VerticalAlignment="Center" Grid.Column="1" Width="32" Height="32"/>
+
+                <TextBlock Text="{Binding User.Name}" VerticalAlignment="Center" FontWeight="Bold" FontSize="18" Grid.Column="2"/>
+            </Grid>
+        </Border>
+
+        <ScrollViewer Margin="8" Grid.Row="1" VerticalAlignment="Stretch" x:Name="ScrollArea" VerticalScrollBarVisibility="Auto">
+            <DockPanel VerticalAlignment="Stretch" LastChildFill="False">
+                <ItemsRepeater DockPanel.Dock="Bottom" VerticalAlignment="Stretch" ItemsSource="{Binding Messages}">
+                <ItemsRepeater.Resources>
+                    <local:StatusToBrushConverter x:Key="StatusConverter"/>
+                </ItemsRepeater.Resources>
+
+                <ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                    <controls:Card Margin="4" HorizontalAlignment="Left" Background="{Binding User.Name, Converter={StaticResource StatusConverter}}}">
+
+                    <Grid Margin="4" ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, Auto">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding User.Name}" FontSize="16" FontWeight="Bold"/>
+
+                        <TextBlock Grid.Row="1" MaxWidth="500" TextWrapping="Wrap" Grid.Column="0" Text="{Binding Content}" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="1" Margin="12,12,0,0" Text="{Binding CreatedAt, StringFormat='HH:mm'}" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                    </Grid>
+
+                    </controls:Card>
+                </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+            </DockPanel>
+        </ScrollViewer>
+
+        <Border BorderThickness="0,2,0,0" BorderBrush="LightGray" Grid.Row="2" Background="WhiteSmoke">
+            <Grid ColumnDefinitions="*, Auto">
+                <TextBox Grid.Column="0" Margin="4" x:Name="MessageContent" />
+                <Button Grid.Column="1" Margin="4" Click="SendMessage_Click">
+                    <icons:MaterialIcon Kind="Send" Margin="4,0" Width="24" Height="24" />
+                </Button>
+            </Grid>
+        </Border>
+
+    </Grid>
 </UserControl>

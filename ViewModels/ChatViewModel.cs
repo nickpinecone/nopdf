@@ -1,5 +1,8 @@
+using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using DynamicData;
 using ReactiveUI;
 using Robochat.Data;
@@ -16,22 +19,35 @@ public class ChatViewModel : ReactiveObject, IActivatableViewModel, IRoutableVie
 
     public ObservableCollection<MessageDto> Messages { get; private set; } = new();
 
-    private readonly IMessageRepository _messageRepository;
+    private UserDto? _user;
+    public UserDto? User
+    {
+        get => _user;
+        set => this.RaiseAndSetIfChanged(ref _user, value);
+    }
+
+    private readonly MessageService _messageService;
+    private readonly ChatService _chatService;
     private readonly Mapper _mapper;
     private readonly int _chatId;
 
-    public ChatViewModel(IScreen screen, IMessageRepository messageRepository, Mapper mapper, int chatId)
+    public ChatViewModel(IScreen screen, int chatId)
     {
-        Activator = new ViewModelActivator();
-
         HostScreen = screen;
-        _messageRepository = messageRepository;
-        _mapper = mapper;
+
+        Activator = new ViewModelActivator();
+        _messageService = new MessageService();
+        _chatService = new ChatService();
+        _mapper = new Mapper();
+
         _chatId = chatId;
 
         this.WhenActivated(async (CompositeDisposable disposables) =>
         {
-            var messages = await _messageRepository.GetMessages(_chatId);
+            var chat = await _chatService.GetChatById(_chatId);
+            User = _mapper.Map(chat!).Users.First();
+
+            var messages = await _messageService.GetMessages(_chatId);
 
             Messages.Clear();
             Messages.AddRange(_mapper.Map(messages));
@@ -45,5 +61,15 @@ public class ChatViewModel : ReactiveObject, IActivatableViewModel, IRoutableVie
     public void RouteToAllChats()
     {
         HostScreen.Router.NavigateBack.Execute();
+    }
+
+    public void SendMessage(string content)
+    {
+        Messages.Add(new MessageDto()
+        {
+            Content = content,
+            CreatedAt = DateTime.UtcNow.ToLocalTime(),
+            User = User!,
+        });
     }
 }
