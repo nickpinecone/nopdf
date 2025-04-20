@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentResults;
 using Microsoft.EntityFrameworkCore;
 using Robochat.Models;
 using Robochat.Services;
@@ -37,7 +38,7 @@ public class ChatService
         return chats;
     }
 
-    public async Task<Chat?> GetChatById(int id)
+    public async Task<Result<Chat>> GetChatById(int id)
     {
         using var db = new AppDbContext();
         var user = await _userAccessor.GetUserAsync();
@@ -48,11 +49,13 @@ public class ChatService
             .AsSplitQuery()
             .SingleOrDefaultAsync(ch => ch.Id == id);
 
-        if (chat is not null)
+        if (chat is null)
         {
-            chat.Users = chat.Users.Where(u => u.Id != user.Id).ToList();
+            return Result.Fail("");
         }
 
-        return chat;
+        chat.Users = chat.Users.Where(u => u.Id != user.Id).ToList();
+
+        return Result.Ok(chat);
     }
 }

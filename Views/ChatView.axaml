@@ -1,7 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:Robochat.ViewModels"
-             xmlns:local="using:Robochat.Views"
+             xmlns:converters="using:Robochat.Converters"
              xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
              xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              x:DataType="vm:ChatViewModel"
@@ -20,23 +20,24 @@
             </Grid>
         </Border>
 
-        <ScrollViewer Margin="8" Grid.Row="1" VerticalAlignment="Stretch" x:Name="ScrollArea" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Margin="12" Grid.Row="1" VerticalAlignment="Stretch" x:Name="ScrollArea" VerticalScrollBarVisibility="Auto">
             <DockPanel VerticalAlignment="Stretch" LastChildFill="False">
                 <ItemsRepeater DockPanel.Dock="Bottom" VerticalAlignment="Stretch" ItemsSource="{Binding Messages}">
                 <ItemsRepeater.Resources>
-                    <local:StatusToBrushConverter x:Key="StatusConverter"/>
+                    <converters:MessageConverter x:Key="MessageConverter"/>
+                    <converters:DateConverter x:Key="DateConverter"/>
                 </ItemsRepeater.Resources>
 
                 <ItemsRepeater.ItemTemplate>
                 <DataTemplate>
-                    <controls:Card Margin="4" HorizontalAlignment="Left" Background="{Binding User.Name, Converter={StaticResource StatusConverter}}}">
+                    <controls:Card Margin="4" HorizontalAlignment="Left" Background="{Binding User.Name, Converter={StaticResource MessageConverter}}">
 
                     <Grid Margin="4" ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, Auto">
                         <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding User.Name}" FontSize="16" FontWeight="Bold"/>
 
                         <TextBlock Grid.Row="1" MaxWidth="500" TextWrapping="Wrap" Grid.Column="0" Text="{Binding Content}" />
 
-                        <TextBlock Grid.Row="1" Grid.Column="1" Margin="12,12,0,0" Text="{Binding CreatedAt, StringFormat='HH:mm'}" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Margin="12,12,0,0" Text="{Binding CreatedAt, Converter={StaticResource DateConverter}}" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
                     </Grid>
 
                     </controls:Card>
@@ -48,7 +49,7 @@
 
         <Border BorderThickness="0,2,0,0" BorderBrush="LightGray" Grid.Row="2" Background="WhiteSmoke">
             <Grid ColumnDefinitions="*, Auto">
-                <TextBox Grid.Column="0" Margin="4" x:Name="MessageContent" />
+                <TextBox Grid.Column="0" Margin="12,0" x:Name="MessageContent" KeyDown="Input_KeyDown" />
                 <Button Grid.Column="1" Margin="4" Click="SendMessage_Click">
                     <icons:MaterialIcon Kind="Send" Margin="4,0" Width="24" Height="24" />
                 </Button>

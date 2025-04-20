@@ -1,6 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:Robochat.ViewModels"
+             xmlns:converters="using:Robochat.Converters"
              xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
              xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              x:DataType="vm:AllChatsViewModel"
@@ -15,7 +16,7 @@
     <ItemsRepeater.ItemTemplate>
     <DataTemplate>
         <controls:Card Margin="4" PointerPressed="Chat_Click">
-            <Grid ColumnDefinitions="48, Auto, Auto" RowDefinitions="24, 24">
+            <Grid ColumnDefinitions="48, *" RowDefinitions="24, 24">
                 <icons:MaterialIcon Kind="Robot" Margin="0,0,8,0" Grid.Column="0" Grid.RowSpan="2" Width="48" Height="48"/>
 
                 <ItemsRepeater ItemsSource="{Binding Users}" Grid.Column="1" Grid.Row="0">
@@ -28,12 +29,18 @@
                 </ItemsRepeater.ItemTemplate>
                 </ItemsRepeater>
 
-                <ItemsRepeater ItemsSource="{Binding Messages}" Grid.Column="1" Grid.Row="1">
+                <ItemsRepeater ItemsSource="{Binding Messages}" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1" Margin="4">
+                <ItemsRepeater.Resources>
+                    <converters:DateConverter x:Key="DateConverter"/>
+                </ItemsRepeater.Resources>
+
                 <ItemsRepeater.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Margin="4" Text="{Binding Content}"/>
-                    </StackPanel>
+                    <Grid ColumnDefinitions="Auto, *, Auto" HorizontalAlignment="Stretch">
+                        <TextBlock Grid.Column="0" Foreground="Blue" Text="{Binding User.Name, StringFormat='{}{0}: '}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Content}"/>
+                        <TextBlock Grid.Column="2" Text="{Binding CreatedAt, Converter={StaticResource DateConverter}}" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="4" />
+                    </Grid>
                 </DataTemplate>
                 </ItemsRepeater.ItemTemplate>
                 </ItemsRepeater>

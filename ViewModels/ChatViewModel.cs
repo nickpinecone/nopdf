@@ -1,8 +1,8 @@
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using DynamicData;
 using ReactiveUI;
 using Robochat.Data;
@@ -45,12 +45,9 @@ public class ChatViewModel : ReactiveObject, IActivatableViewModel, IRoutableVie
         this.WhenActivated(async (CompositeDisposable disposables) =>
         {
             var chat = await _chatService.GetChatById(_chatId);
-            User = _mapper.Map(chat!).Users.First();
+            User = _mapper.Map(chat.Value).Users.First();
 
-            var messages = await _messageService.GetMessages(_chatId);
-
-            Messages.Clear();
-            Messages.AddRange(_mapper.Map(messages));
+            await FetchMessages();
 
             Disposable
                 .Create(() => { })
@@ -58,18 +55,29 @@ public class ChatViewModel : ReactiveObject, IActivatableViewModel, IRoutableVie
         });
     }
 
+    private async Task FetchMessages()
+    {
+        var messages = await _messageService.GetMessages(_chatId);
+
+        Messages.Clear();
+        Messages.AddRange(_mapper.Map(messages));
+    }
+
+    private async Task SimulateReply()
+    {
+        await _messageService.GetReplyFromBot(_chatId);
+        await FetchMessages();
+    }
+
     public void RouteToAllChats()
     {
         HostScreen.Router.NavigateBack.Execute();
     }
 
-    public void SendMessage(string content)
+    public async Task SendMessage(string content)
     {
-        Messages.Add(new MessageDto()
-        {
-            Content = content,
-            CreatedAt = DateTime.UtcNow.ToLocalTime(),
-            User = User!,
-        });
+        await _messageService.SendMessage(_chatId, content);
+        await FetchMessages();
+        await SimulateReply();
     }
 }

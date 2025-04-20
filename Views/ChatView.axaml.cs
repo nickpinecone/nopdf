@@ -1,32 +1,12 @@
-using System;
 using System.Collections.Specialized;
-using System.Globalization;
-using Avalonia;
-using Avalonia.Data.Converters;
+using System.Threading.Tasks;
+using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Media;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
 using Robochat.ViewModels;
 
 namespace Robochat.Views;
-
-public class StatusToBrushConverter : IValueConverter
-{
-    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-    {
-        return value?.ToString() switch
-        {
-            Config.UserName => Brushes.LightBlue,
-            _ => Brushes.White
-        };
-    }
-
-    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
-}
 
 public partial class ChatView : ReactiveUserControl<ChatViewModel>
 {
@@ -36,11 +16,22 @@ public partial class ChatView : ReactiveUserControl<ChatViewModel>
 
         this.WhenActivated(disposables =>
         {
+            ScrollArea.ScrollToEnd();
+
             if (ViewModel is not null)
             {
                 ViewModel.Messages.CollectionChanged += OnNewMessage;
             }
         });
+    }
+
+    private async Task SendMessage(string? content)
+    {
+        if (ViewModel is not null && !string.IsNullOrEmpty(content))
+        {
+            MessageContent.Text = "";
+            await ViewModel.SendMessage(content);
+        }
     }
 
     private void OnNewMessage(object? sender, NotifyCollectionChangedEventArgs args)
@@ -53,8 +44,16 @@ public partial class ChatView : ReactiveUserControl<ChatViewModel>
         ViewModel?.RouteToAllChats();
     }
 
-    public void SendMessage_Click(object sender, RoutedEventArgs args)
+    public async void SendMessage_Click(object sender, RoutedEventArgs args)
     {
-        ViewModel?.SendMessage(MessageContent.Text!);
+        await SendMessage(MessageContent.Text);
+    }
+
+    public async void Input_KeyDown(object sender, KeyEventArgs args)
+    {
+        if (args.Key == Key.Enter)
+        {
+            await SendMessage(MessageContent.Text);
+        }
     }
 }
