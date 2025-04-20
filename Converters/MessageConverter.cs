@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
+using Robochat.Utils;
 
 namespace Robochat.Converters;
 

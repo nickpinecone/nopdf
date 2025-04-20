@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Robochat.Data;
 using Robochat.Models;
+using Robochat.Utils;
 
 namespace Robochat.Services;
 

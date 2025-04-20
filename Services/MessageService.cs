@@ -5,10 +5,11 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using FluentResults;
 using Microsoft.EntityFrameworkCore;
+using Robochat.Data;
 using Robochat.Models;
-using Robochat.Services;
+using Robochat.Utils;
 
-namespace Robochat.Data;
+namespace Robochat.Services;
 
 public class MessageService
 {

@@ -1,4 +1,4 @@
-namespace Robochat;
+namespace Robochat.Utils;
 
 public static class Config
 {

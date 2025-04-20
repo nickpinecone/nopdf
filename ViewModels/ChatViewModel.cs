@@ -5,7 +5,6 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using DynamicData;
 using ReactiveUI;
-using Robochat.Data;
 using Robochat.Models;
 using Robochat.Services;
 

@@ -3,10 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentResults;
 using Microsoft.EntityFrameworkCore;
+using Robochat.Data;
 using Robochat.Models;
-using Robochat.Services;
 
-namespace Robochat.Data;
+namespace Robochat.Services;
 
 public class ChatService
 {

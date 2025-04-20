@@ -3,12 +3,12 @@
              xmlns:themes="clr-namespace:Material.Styles.Themes;assembly=Material.Styles"
              xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              x:Class="Robochat.App"
-             xmlns:local="using:Robochat"
+             xmlns:utils="using:Robochat.Utils"
              RequestedThemeVariant="Default">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <utils:ViewLocator/>
     </Application.DataTemplates>
   
     <Application.Styles>

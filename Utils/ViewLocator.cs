@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Robochat.ViewModels;
 
-namespace Robochat;
+namespace Robochat.Utils;
 
 public class ViewLocator : IDataTemplate
 {

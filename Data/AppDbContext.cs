@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Robochat.Models;
+using Robochat.Utils;
 
 namespace Robochat.Data;
 

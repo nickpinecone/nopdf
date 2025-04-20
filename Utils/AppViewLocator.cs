@@ -1,10 +1,11 @@
 using System;
 using ReactiveUI;
 using Robochat.ViewModels;
+using Robochat.Views;
 
-namespace Robochat.Views;
+namespace Robochat.Utils;
 
-public class AppViewLocator : ReactiveUI.IViewLocator
+public class AppViewLocator : IViewLocator
 {
     public IViewFor? ResolveView<T>(T? viewModel, string? contract) => viewModel switch
     {

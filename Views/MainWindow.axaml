@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
         xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-        xmlns:app="clr-namespace:Robochat.Views"
+        xmlns:utils="clr-namespace:Robochat.Utils"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Robochat.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -25,7 +25,7 @@
         <rxui:RoutedViewHost Router="{Binding Router}" VerticalAlignment="Stretch" PageTransition="{x:Null}">
             <rxui:RoutedViewHost.ViewLocator>
                 <!-- See AppViewLocator.cs section below -->
-                <app:AppViewLocator />
+                <utils:AppViewLocator />
             </rxui:RoutedViewHost.ViewLocator>
         </rxui:RoutedViewHost>
 
