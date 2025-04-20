@@ -20,8 +20,8 @@
             </Grid>
         </Border>
 
-        <ScrollViewer Margin="12" Grid.Row="1" VerticalAlignment="Stretch" x:Name="ScrollArea" VerticalScrollBarVisibility="Auto">
-            <DockPanel VerticalAlignment="Stretch" LastChildFill="False">
+        <ScrollViewer Grid.Row="1" VerticalAlignment="Stretch" x:Name="ScrollArea" VerticalScrollBarVisibility="Auto">
+            <DockPanel Margin="12" VerticalAlignment="Stretch" LastChildFill="False">
                 <ItemsRepeater DockPanel.Dock="Bottom" VerticalAlignment="Stretch" ItemsSource="{Binding Messages}">
                 <ItemsRepeater.Resources>
                     <converters:MessageConverter x:Key="MessageConverter"/>

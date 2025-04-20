@@ -81,11 +81,9 @@ public class MessageService
 
         var bot = await db.Users.SingleAsync(u => u.Name == Config.BotName);
 
-        List<string> variants = ["Привет", "Чем могу помочь?", "Конечно"];
-
         var reply = new Message()
         {
-            Content = variants[_rng.Next(3)],
+            Content = Config.Replies[_rng.Next(3)],
             ChatId = chat.Id,
             CreatedAt = DateTime.UtcNow,
             UserId = bot.Id,
