@@ -16,10 +16,10 @@ public class MessageService
     private readonly UserAccessor _userAccessor;
     private readonly Random _rng;
 
-    public MessageService()
+    public MessageService(UserAccessor userAccessor)
     {
-        _userAccessor = new UserAccessor();
         _rng = new Random();
+        _userAccessor = userAccessor;
     }
 
     public async Task<List<Message>> GetMessages(int chatId)

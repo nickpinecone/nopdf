@@ -12,9 +12,9 @@ public class ChatService
 {
     private readonly UserAccessor _userAccessor;
 
-    public ChatService()
+    public ChatService(UserAccessor userAccessor)
     {
-        _userAccessor = new UserAccessor();
+        _userAccessor = userAccessor;
     }
 
     public async Task<List<Chat>> GetChats()

@@ -4,6 +4,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using DynamicData;
+using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using Robochat.Models;
 using Robochat.Services;
@@ -30,16 +31,15 @@ public class ChatViewModel : ReactiveObject, IActivatableViewModel, IRoutableVie
     private readonly Mapper _mapper;
     private readonly int _chatId;
 
-    public ChatViewModel(IScreen screen, int chatId)
+    public ChatViewModel(MessageService messageService, ChatService chatService, Mapper mapper, ViewModelActivator activator, int chatId)
     {
-        HostScreen = screen;
-
-        Activator = new ViewModelActivator();
-        _messageService = new MessageService();
-        _chatService = new ChatService();
-        _mapper = new Mapper();
-
         _chatId = chatId;
+        _messageService = messageService;
+        _chatService = chatService;
+        _mapper = mapper;
+
+        HostScreen = ServiceManager.ServiceProvider.GetRequiredService<MainWindowViewModel>();
+        Activator = activator;
 
         this.WhenActivated(async (CompositeDisposable disposables) =>
         {

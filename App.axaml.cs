@@ -5,6 +5,10 @@ using System.Linq;
 using Avalonia.Markup.Xaml;
 using Robochat.ViewModels;
 using Robochat.Views;
+using Microsoft.Extensions.DependencyInjection;
+using Robochat.Services;
+using Robochat.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Robochat;
 
@@ -19,17 +23,32 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            MigrateDatabase();
+
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             DisableAvaloniaDataAnnotationValidation();
 
+            var viewModel = ServiceManager.ServiceProvider.GetRequiredService<MainWindowViewModel>();
+
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = viewModel,
             };
         }
 
         base.OnFrameworkInitializationCompleted();
+    }
+
+    private void MigrateDatabase()
+    {
+        using var scope = ServiceManager.ServiceProvider.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+        if (context.Database.GetPendingMigrations().Any())
+        {
+            context.Database.Migrate();
+        }
     }
 
     private void DisableAvaloniaDataAnnotationValidation()

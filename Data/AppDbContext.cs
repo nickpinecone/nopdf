@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Robochat.Models;
@@ -14,8 +15,18 @@ public class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
+        var appData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        var roboPath = Path.Combine(appData, "Robochat");
+
+        if (!Directory.Exists(roboPath))
+        {
+            Directory.CreateDirectory(roboPath);
+        }
+
+        var dbPath = Path.Combine(roboPath, nameof(Robochat) + ".sqlite");
+
         options
-            .UseSqlite($"Data Source={nameof(Robochat)}.sqlite")
+            .UseSqlite($"Data Source={dbPath}")
             .UseSeeding((context, _) =>
             {
                 var exists = context.Set<User>().FirstOrDefault(u => u.Name == Config.UserName);
