@@ -1,8 +1,0 @@
-<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles">
-
-    <Style Selector="controls|Card:pointerover">
-        <Setter Property="Background" Value="LightGray"/>
-    </Style>
-</Styles>

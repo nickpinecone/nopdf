@@ -1,22 +1,2 @@
-# Robochat
-Чат с роботом для UDV Summer Camp
-
-## Технологии
-- C#
-- Avalonia UI
-- EF Core + Sqlite
-
-## Запуск
-Склонируйте проект
-```sh
-git clone https://github.com/nickpinecone/robochat.git
-```
-
-Запустите
-```sh
-dotnet run
-```
-
-## Скрины
-![chats-screen](./Assets/chats-screen.png)
-![conversation-screen](./Assets/conversation-screen.png)
+# Nopdf
+Plain android pdf viewer and editor
