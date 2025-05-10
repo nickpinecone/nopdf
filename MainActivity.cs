@@ -1,4 +1,7 @@
 using System.Text;
+using Android.App;
+using Android.OS;
+using Android.Widget;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
