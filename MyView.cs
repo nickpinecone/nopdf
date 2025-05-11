@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using Android.Content;
 using Android.Graphics;
+using Android.Graphics.Pdf;
+using Android.OS;
 using Android.Runtime;
 using Android.Service.Autofill;
 using Android.Util;
@@ -13,6 +15,8 @@ using iText.Kernel.Pdf.Canvas.Parser;
 using iText.Kernel.Pdf.Canvas.Parser.Data;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using iText.Kernel.Pdf.Colorspace;
+using Matrix = iText.Kernel.Geom.Matrix;
+using PdfDocument = iText.Kernel.Pdf.PdfDocument;
 
 namespace Nopdf;
 
@@ -27,12 +31,17 @@ public class AndroidTextExtractor : ITextExtractionStrategy
             var baseline = text.GetBaseline();
             Vector start = baseline.GetStartPoint();
             
+            Matrix textMatrix = text.GetTextMatrix();
+            float scaleX = Math.Abs(textMatrix.Get(Matrix.I11));
+            float scaleY = Math.Abs(textMatrix.Get(Matrix.I22));
+            float _fontSize = text.GetFontSize() * (scaleX + scaleY) / 2;
+            
             Chunks.Add(new TextChunk
             {
                 Text = text.GetText(),
                 X = start.Get(Vector.I1),
                 Y = start.Get(Vector.I2),
-                FontSize = text.GetFontSize(),
+                FontSize = _fontSize,
                 Color = ToAndroidColor(text.GetFillColor())
             });
         }
@@ -87,6 +96,8 @@ public class MyView : View
 
         var scaleX = canvas.Width / pdfDoc.GetFirstPage().GetPageSize().GetWidth();
         var scaleY = canvas.Height / pdfDoc.GetFirstPage().GetPageSize().GetHeight();
+        // var scaleX = 1;
+        // var scaleY = 1;
         
         for (var i = 0; i < pdfDoc.GetNumberOfPages(); i++)
         {
@@ -102,7 +113,7 @@ public class MyView : View
             foreach (var chunk in strategy.Chunks)
             {
                 paint.Color = chunk.Color;
-                paint.TextSize = 12f * scaleX;
+                paint.TextSize = scaleX * chunk.FontSize;
         
                 float androidY = pageHeight - chunk.Y;
         
