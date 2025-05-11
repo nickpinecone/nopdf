@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Nopdf</string>
-    <string name="app_text">Hello, Android!</string>
+    <string name="open_action">Open</string>
+    <string name="open_activity_name">Open</string>
 </resources>
