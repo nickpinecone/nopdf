@@ -1,12 +1,14 @@
 using Android.App;
 using Android.Content;
 using Android.OS;
+using AndroidX.AppCompat.App;
 using AndroidX.Fragment.App;
 
 namespace Nopdf;
 
+
 [Activity(Label = "@string/open_activity_name")]
-public sealed class OpenActivity : FragmentActivity
+public sealed class OpenActivity : AppCompatActivity
 {
     private const int PickPdfRequest = 1;
 

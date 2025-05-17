@@ -3,11 +3,12 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Widget;
+using AndroidX.AppCompat.App;
 
 namespace Nopdf;
 
 [Activity(Label = "@string/app_name", MainLauncher = true)]
-public class MainActivity : Activity
+public class MainActivity : AppCompatActivity
 {
     private Button _openButton = null!;
     

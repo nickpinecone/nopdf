@@ -5,10 +5,28 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
-    <Button
-        android:id="@+id/open_button"
-        android:layout_width="wrap_content"
+    <GridLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/open_action" />
+        android:rowCount="1"
+        android:columnCount="2">
+        
+        <Button
+            android:layout_margin="8dp"
+            android:id="@+id/open_button"
+            android:layout_width="0dp"
+            android:layout_columnWeight="1"
+            android:layout_height="100dp"
+            android:text="@string/open_action" />
+        
+        <Button
+            android:layout_margin="8dp"
+            android:layout_marginLeft="0dp"
+            android:layout_width="0dp"
+            android:layout_columnWeight="1"
+            android:layout_height="100dp"
+            android:text="@string/open_action" />
+        
+    </GridLayout>
 
 </LinearLayout>
