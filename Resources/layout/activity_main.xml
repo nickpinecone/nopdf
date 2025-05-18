@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -12,6 +13,9 @@
         android:columnCount="2">
         
         <Button
+            app:icon="@drawable/visibility_48"
+            app:iconGravity="textTop"
+            app:iconSize="32dp"
             android:layout_margin="8dp"
             android:id="@+id/open_button"
             android:layout_width="0dp"
@@ -20,12 +24,15 @@
             android:text="@string/open_action" />
         
         <Button
+            app:icon="@drawable/history_edu_48"
+            app:iconGravity="textTop"
+            app:iconSize="32dp"
             android:layout_margin="8dp"
             android:layout_marginLeft="0dp"
             android:layout_width="0dp"
             android:layout_columnWeight="1"
             android:layout_height="100dp"
-            android:text="@string/open_action" />
+            android:text="@string/sign_action" />
         
     </GridLayout>
 
