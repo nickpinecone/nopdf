@@ -6,7 +6,7 @@ using Android.Views;
 using Android.Widget;
 using AndroidX.Fragment.App;
 
-namespace Nopdf;
+namespace Oakay;
 
 public class PdfViewFragment : Fragment
 {

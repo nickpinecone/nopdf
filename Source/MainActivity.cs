@@ -5,7 +5,7 @@ using Android.OS;
 using Android.Widget;
 using AndroidX.AppCompat.App;
 
-namespace Nopdf;
+namespace Oakay;
 
 [Activity(Label = "@string/app_name", MainLauncher = true)]
 public class MainActivity : AppCompatActivity

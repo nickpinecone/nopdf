@@ -4,7 +4,7 @@ using Android.OS;
 using AndroidX.AppCompat.App;
 using AndroidX.Fragment.App;
 
-namespace Nopdf;
+namespace Oakay;
 
 
 [Activity(Label = "@string/open_activity_name")]

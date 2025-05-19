@@ -1,14 +1,14 @@
 <resources>
     <style name="AppTheme" parent="Theme.Material3.Dark">
-        <item name="materialButtonStyle">@style/NopdfButton</item>
+        <item name="materialButtonStyle">@style/OakayButton</item>
     </style>
     
-    <style name="ShapeAppearance.Nopdf.Button" parent="ShapeAppearance.Material3.SmallComponent">
+    <style name="ShapeAppearance.Oakay.Button" parent="ShapeAppearance.Material3.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">4dp</item>
     </style>
     
-    <style name="NopdfButton" parent="Widget.Material3.Button">
-        <item name="shapeAppearance">@style/ShapeAppearance.Nopdf.Button</item>
+    <style name="OakayButton" parent="Widget.Material3.Button">
+        <item name="shapeAppearance">@style/ShapeAppearance.Oakay.Button</item>
     </style>
 </resources>

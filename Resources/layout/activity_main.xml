@@ -13,7 +13,7 @@
         android:columnCount="2">
         
         <Button
-            app:icon="@drawable/visibility_48"
+            app:icon="@drawable/ic_open"
             app:iconGravity="textTop"
             app:iconSize="32dp"
             android:layout_margin="8dp"
@@ -24,7 +24,7 @@
             android:text="@string/open_action" />
         
         <Button
-            app:icon="@drawable/history_edu_48"
+            app:icon="@drawable/ic_sign"
             app:iconGravity="textTop"
             app:iconSize="32dp"
             android:layout_margin="8dp"
